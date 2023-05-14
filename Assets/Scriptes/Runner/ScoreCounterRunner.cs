@@ -3,13 +3,18 @@ using TMPro;
 using System.Collections;
 public class ScoreCounterRunner : MonoBehaviour
 {
-    [SerializeField] private TMP_Text ScoreCounterText;
-    [SerializeField] private TMP_Text BestResultText;
-    [SerializeField] private PlayerRunner PlayerRunner;
-    private int NumberPoints;
-    private int BestResult;
-    private float TimeAddingPoints = 1f;
+    [SerializeField] private TMP_Text _scoreCounterText;
+    [SerializeField] private TMP_Text _bestResultText;
+    [SerializeField] private PlayerRunner _playerRunnerScript;
 
+    [SerializeField] private float _unitSpeedAddingPoints = 0.05f;
+    
+    private float _timeAddingPoints = 1f;
+    private float _updateFrequencyOfTimeOfAddingPoints = 15f;
+    
+    private int _numberPoints;
+    private int _bestResult;
+    
     private void Awake()
     {
         StartCoroutine(nameof(AddingPoints));
@@ -20,13 +25,13 @@ public class ScoreCounterRunner : MonoBehaviour
     private void UpdateBestResultInBegin()
     {
         if (PlayerPrefs.HasKey("BestResultRunner"))
-                BestResult = PlayerPrefs.GetInt("BestResultRunner");
+                _bestResult = PlayerPrefs.GetInt("BestResultRunner");
     }
 
     private IEnumerator AddingPoints()
     {
-        yield return new WaitForSeconds(TimeAddingPoints);
-        NumberPoints++;
+        yield return new WaitForSeconds(_timeAddingPoints);
+        _numberPoints++;
         StartCoroutine(nameof(AddingPoints));
     }
 
@@ -40,30 +45,30 @@ public class ScoreCounterRunner : MonoBehaviour
 
     private void IsLose()
     {
-        if (PlayerRunner.IsLose)
+        if (_playerRunnerScript._isLose)
         {
             SaveBestResult();
-            BestResultText.text = ($"{BestResult:0000}m");
+            _bestResultText.text = ($"{_bestResult:0000}m");
             StopCoroutine(nameof(AddingPoints));
         }
     }
     
     private IEnumerator UpdateTimeAddingPoints()
     {
-        yield return new WaitForSeconds(15);
-        TimeAddingPoints -= 0.05f;
+        yield return new WaitForSeconds(_updateFrequencyOfTimeOfAddingPoints);
+        _timeAddingPoints -= _unitSpeedAddingPoints;
         StartCoroutine(nameof(UpdateTimeAddingPoints));
     }
 
-    private void Equating() => ScoreCounterText.text = $"{NumberPoints:000000}m";
+    private void Equating() => _scoreCounterText.text = $"{_numberPoints:000000}m";
      
     
     private void SaveBestResult()
     {
-        if (NumberPoints > BestResult)
+        if (_numberPoints > _bestResult)
         {
-            BestResult = NumberPoints;
-            PlayerPrefs.SetInt("BestResultRunner", BestResult);
+            _bestResult = _numberPoints;
+            PlayerPrefs.SetInt("BestResultRunner", _bestResult);
         }
     }
 }

@@ -5,18 +5,28 @@ using UnityEngine.Audio;
 public class AudioSetter : MonoBehaviour
 {
 
-    [SerializeField] private Slider Slider;
-    [SerializeField] private AudioMixer Mixer;
+    [SerializeField] private Slider _slider;
+    
+    [SerializeField] private AudioMixer _mixer;
+
+    private float _volume = 1;
+
+    private void Awake()
+    {
+        if (!PlayerPrefs.HasKey("Volume"))
+            PlayerPrefs.SetFloat("Volume", _volume);
+    }
 
     private void Start()
     {
-        Slider.value = StaticVolume.Volume;
-        Mixer.SetFloat("Volume", StaticVolume.Volume * 50 - 50);
+        _slider.value = PlayerPrefs.GetFloat("Volume");
+        _mixer.SetFloat("Volume", _volume * 50 - 50);
     }
 
     public void OnChangeVolume()
     {
-        StaticVolume.Volume = Slider.value;
-        Mixer.SetFloat("Volume", StaticVolume.Volume * 50 - 50);
+        _volume = _slider.value;
+        PlayerPrefs.SetFloat("Volume", _volume);
+        _mixer.SetFloat("Volume", _volume * 50 - 50);
     }
 }

@@ -4,108 +4,73 @@ using UnityEngine.UI;
 public class IndicatorNumberRays : MonoBehaviour
 {
     [Header("Strips")]
-    [SerializeField] private Image ImageComponentLeftRayChargeStrips;
-    [SerializeField] private Image ImageComponentRightRayChargeStrips;
-    [SerializeField] private Sprite FiveChargeStrips;
-    [SerializeField] private Sprite FourChargeStrips;
-    [SerializeField] private Sprite ThreeChargeStrips;
-    [SerializeField] private Sprite TwoChargeStrips;
-    [SerializeField] private Sprite OneChargeStrips;
-    [SerializeField] private Sprite ZeroChargeStrips;
-    private int NumberLeftRayCharge = 5;
-    private int NumberRightRayCharge = 5;
-    private const float TimeChargeRefresh = 2.5f;
-    private float ChargeRefreshTimerLeftRay = 2.5f;
-    private float ChargeRefreshTimerRightRay = 2.5f;
-    private const float TimeOfLossOfCharge = 1f;
-    private float ChargeDischargeTimerLeftRay = 1f;
-    private float ChargeDischargeTimerRightRay = 1f;
+    [SerializeField] private Image _imageComponentOfIndicatiorOfLeftRay;
+    [SerializeField] private Image _imageComponentOfIndicatiorOfRightRay;
+    [SerializeField] private Sprite _fiveChargeStrip, _fourChargeStrip, _threeChargeStrip, _twoChargeStrip, _oneChargeStrip, _zeroChargeStrip;
+    
+    private int _numberOfChargeOfLeftRay = 5;
+    private int _numberOfChargeOfRightRay = 5;
+    
+    private const float _timeChargeRefresh = 2.5f;
+    private const float _timeOfLossOfCharge = 1f;
+    private float _timeToChargeBoostOfStripOfLeftRay = 2.5f;
+    private float _timeToChargeBoostOfStripOfRightRay = 2.5f;
+    private float _timeToDischargeOfStripOfLeftRay = 1f;
+    private float _timeToDischargeOfStripOfRightRay = 1f;
 
     [Space] [Header("Links")] [SerializeField]
-    private ShootingSystemLibrary ShootingSystemLibraryScript;
+    private ShootingSystemLibrary _shootingSystemLibrary;
 
     private void Update()
     {
-        DisplayingChargesRightRay();
-        DisplayingChargesLeftRay();
-        UpdateTimerRefreshStripesRightRay();
-        UpdateTimerRefreshStripesLeftRay();
+        UpdateDisplayOfIndicator(ref _imageComponentOfIndicatiorOfLeftRay, _numberOfChargeOfLeftRay);
+        UpdateDisplayOfIndicator(ref _imageComponentOfIndicatiorOfRightRay, _numberOfChargeOfRightRay);
+        UpdateTimeBeforeAddingCharge(ref _timeToChargeBoostOfStripOfLeftRay, ref _numberOfChargeOfLeftRay);
+        UpdateTimeBeforeAddingCharge(ref _timeToChargeBoostOfStripOfRightRay, ref _numberOfChargeOfRightRay);
+        UpdateTimeBeforeDecreaseCharge(_shootingSystemLibrary.IsShootingLeftRay, ref _timeToDischargeOfStripOfLeftRay, ref _numberOfChargeOfLeftRay);
+        UpdateTimeBeforeDecreaseCharge(_shootingSystemLibrary.IsShootingRightRay, ref _timeToDischargeOfStripOfRightRay, ref _numberOfChargeOfRightRay);
         AdjustingShootingPermission();
-        UpdateTimerDischargeStripesLeftRay();
-        UpdateTimerDischargeStripesRightRay();
+        
     }
-    private void DisplayingChargesLeftRay()
+    private void UpdateDisplayOfIndicator(ref Image imageComponent, int numberOfCharge)
     {
-        ImageComponentLeftRayChargeStrips.sprite = NumberLeftRayCharge switch
+        imageComponent.sprite = numberOfCharge switch
         {
-            5 => FiveChargeStrips,
-            4 => FourChargeStrips,
-            3 => ThreeChargeStrips,
-            2 => TwoChargeStrips,
-            1 => OneChargeStrips,
-            _ => ZeroChargeStrips
+            5 => _fiveChargeStrip,
+            4 => _fourChargeStrip,
+            3 => _threeChargeStrip,
+            2 => _twoChargeStrip,
+            1 => _oneChargeStrip,
+            _ => _zeroChargeStrip
         };
-    }
-    private void DisplayingChargesRightRay()
-    {
-        ImageComponentRightRayChargeStrips.sprite = NumberRightRayCharge switch
-        {
-            5 => FiveChargeStrips,
-            4 => FourChargeStrips,
-            3 => ThreeChargeStrips,
-            2 => TwoChargeStrips,
-            1 => OneChargeStrips,
-            _ => ZeroChargeStrips
-        };
-    }
-    private void AdjustingShootingPermission()
-    {
-        ShootingSystemLibraryScript.IsCanRightRayShoot = NumberRightRayCharge != 0;
-        ShootingSystemLibraryScript.IsCanLeftRayShoot = NumberLeftRayCharge != 0;   
     }
 
-    private void UpdateTimerDischargeStripesLeftRay()
+    private void AdjustingShootingPermission()
     {
-        if (ShootingSystemLibraryScript.IsShootingLeftRay)
-            ChargeDischargeTimerLeftRay -= Time.deltaTime;
-        
-        if (ChargeDischargeTimerLeftRay < 0)
-        {
-            NumberLeftRayCharge--;
-            ChargeDischargeTimerLeftRay = TimeOfLossOfCharge;
-        }
+        _shootingSystemLibrary.SetIsCanShootingLeftRay(_numberOfChargeOfLeftRay != 0);
+        _shootingSystemLibrary.SetIsCanShootingRightRay(_numberOfChargeOfRightRay != 0);
     }
-    
-    private void UpdateTimerDischargeStripesRightRay()
+
+    private void UpdateTimeBeforeAddingCharge(ref float timeToChargeUpdate, ref int numberOfCharge)
     {
-        if (ShootingSystemLibraryScript.IsShootingRightRay)
-            ChargeDischargeTimerRightRay -= Time.deltaTime;
-        if (ChargeDischargeTimerRightRay < 0)
+        if (timeToChargeUpdate < 0)
         {
-            NumberRightRayCharge--;
-            ChargeDischargeTimerRightRay = TimeOfLossOfCharge;   
+            numberOfCharge++;
+            timeToChargeUpdate = _timeChargeRefresh;
         }
+        if (numberOfCharge < 5)
+            timeToChargeUpdate -= Time.deltaTime;
     }
-    
-    private void UpdateTimerRefreshStripesLeftRay()
+
+    private void UpdateTimeBeforeDecreaseCharge(bool isShootingRay, ref float timeToDischarge, ref int numberOfCharge)
     {
-        if (ChargeRefreshTimerLeftRay < 0)
+        if (isShootingRay)
+            timeToDischarge -= Time.deltaTime;
+
+        if (timeToDischarge < 0)
         {
-            NumberLeftRayCharge++;
-            ChargeRefreshTimerLeftRay = TimeChargeRefresh;
+            numberOfCharge--;
+            timeToDischarge = _timeOfLossOfCharge;
         }
-        if (NumberLeftRayCharge < 5 && !ShootingSystemLibraryScript.IsShootingLeftRay)
-            ChargeRefreshTimerLeftRay -= Time.deltaTime;
-    }
-    
-    private void UpdateTimerRefreshStripesRightRay()
-    {
-        if (ChargeRefreshTimerRightRay < 0)
-        {
-            NumberRightRayCharge++;
-            ChargeRefreshTimerRightRay = TimeChargeRefresh;
-        }
-        if (NumberRightRayCharge < 5  && !ShootingSystemLibraryScript.IsShootingRightRay)
-            ChargeRefreshTimerRightRay -= Time.deltaTime;
     }
 }

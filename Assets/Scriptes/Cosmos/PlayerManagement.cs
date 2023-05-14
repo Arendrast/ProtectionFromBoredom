@@ -3,72 +3,71 @@ using UnityEngine;
 
 public class PlayerManagement : MonoBehaviour
 {
-    private const float Speed = 2.5f;
-    public Vector2 FlightDirection;
-    private Rigidbody2D Rb;
-    private const KeyCode ButtonRight = KeyCode.D;
-    private const KeyCode ButtonLeft = KeyCode.A;
-    private bool IsPressedButtonRight;
-    private bool IsPressedButtonLeft;
-
-    [SerializeField] private ButtonMoveLeftAndroidCosmos ButtonLeftOnAndroid;
-    [SerializeField] private ButtonMoveRightAndroidCosmos ButtonRightOnAndroid;
-    [SerializeField] private GameObject ManagementOnAndroid;
+    private Vector2 FlightDirection;
     
+    private const float _speed = 2.5f;
+    
+    private Rigidbody2D _rb;
+    
+    private const KeyCode _buttonRight = KeyCode.D;
+    private const KeyCode _buttonLeft = KeyCode.A;
+    
+    private bool _isPressedButtonRight;
+    private bool _isPressedButtonLeft;
+
+    [SerializeField] private ButtonMoveAndroidCosmos _buttonLeftOnAndroid;
+    [SerializeField] private ButtonMoveAndroidCosmos _buttonRightOnAndroid;
+    
+    [SerializeField] private GameObject _managementOnAndroid;
     private void Start()
     {
-        Rb = GetComponent<Rigidbody2D>();
-        Rb.freezeRotation = true;
-        Rb.constraints = RigidbodyConstraints2D.FreezePositionY;
+        _rb = GetComponent<Rigidbody2D>();
+        _rb.freezeRotation = true;
+        _rb.constraints = RigidbodyConstraints2D.FreezePositionY;
     }
     private void Update() => ManagementDirection();
     private void FixedUpdate() => Move();
-    private void Move() => Rb.velocity = new Vector2(FlightDirection.x * Speed, Rb.velocity.y);
+    private void Move() => _rb.velocity = new Vector2(FlightDirection.x * _speed, _rb.velocity.y);
     private void ManagementDirection()
     {
-        if (!ManagementOnAndroid.activeInHierarchy)
+        if (!_managementOnAndroid.activeInHierarchy)
         {
-            if (Input.GetKey(ButtonRight) && !IsPressedButtonLeft)
-            {
-                FlightDirection = Vector2.right;
-                IsPressedButtonRight = true;
-            }
-            
-            if (Input.GetKeyUp(ButtonRight))
-                IsPressedButtonRight = false;
+            if (Input.GetKey(_buttonRight) && !_isPressedButtonLeft)
+                ChangeFlightDirection(Vector2.right, ref _isPressedButtonRight);
 
-            if (Input.GetKey(ButtonLeft) && !IsPressedButtonRight)
-            {
-                FlightDirection = Vector2.left;
-                IsPressedButtonLeft = true;
-            }
+            if (Input.GetKeyUp(_buttonRight))
+                _isPressedButtonRight = false;
 
-            if (Input.GetKeyUp(ButtonLeft))
-                IsPressedButtonLeft = false;
+            if (Input.GetKey(_buttonLeft) && !_isPressedButtonRight)
+                ChangeFlightDirection(Vector2.left, ref _isPressedButtonLeft);
+
+            if (Input.GetKeyUp(_buttonLeft))
+                _isPressedButtonLeft = false;
         }
         else
         {
-            if (ButtonRightOnAndroid.IsButtonPressed && !IsPressedButtonLeft)
-            {
-                FlightDirection = Vector2.right;
-                IsPressedButtonRight = true;
-            }
+            if (_buttonRightOnAndroid.IsButtonPressed && !_isPressedButtonLeft)
+                ChangeFlightDirection(Vector2.right, ref _isPressedButtonRight);
 
-            if (!ButtonRightOnAndroid.IsButtonPressed)
-                IsPressedButtonRight = false;
+            if (!_buttonRightOnAndroid.IsButtonPressed)
+                _isPressedButtonRight = false;
 
-            if (ButtonLeftOnAndroid.IsButtonPressed && !IsPressedButtonRight)
-            {
-                FlightDirection = Vector2.left;
-                IsPressedButtonLeft = true;
-            }
+            if (_buttonLeftOnAndroid.IsButtonPressed && !_isPressedButtonRight)
+                ChangeFlightDirection(Vector2.left, ref _isPressedButtonLeft);
 
-            if (!ButtonLeftOnAndroid.IsButtonPressed)
-                IsPressedButtonLeft = false;
+            if (!_buttonLeftOnAndroid.IsButtonPressed)
+                _isPressedButtonLeft = false;
         }
         
-        if (!IsPressedButtonLeft && !IsPressedButtonRight)
+        if (!_isPressedButtonLeft && !_isPressedButtonRight)
             FlightDirection = Vector2.zero;
     }
+
+    private void ChangeFlightDirection(Vector2 vector, ref bool isPressedButton)
+    {
+        FlightDirection = vector;
+        isPressedButton = true;
+    }
+        
 }
     

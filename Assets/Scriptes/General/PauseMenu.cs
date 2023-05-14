@@ -1,28 +1,31 @@
-using System;
-using Unity.VisualScripting;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject Canvas;
-    [SerializeField] private GameObject ButtonManagement;
-    [SerializeField] private PlayerRunner PlayerScriptRunner;
-    [SerializeField] private PlayerCosmos PlayerScriptCosmos;
-    [SerializeField] private GameObject Settings;
-    [SerializeField] private AudioSource BackGroundSound;
-    private bool IsPause;
-    private bool IsManagementOnAndroidOn;
+    [SerializeField] private GameObject _canvas;
+    [SerializeField] private GameObject _buttonManagement;
+    [SerializeField] private GameObject _settings;
+    
+    [SerializeField] private PlayerRunner _playerScriptRunner;
+    
+    [SerializeField] private PlayerCosmos _playerScriptCosmos;
+    
+    [SerializeField] private AudioSource _backgroundSound;
+    
+    private bool _isPause;
+    private bool _isManagementOnAndroidOn;
     private void Update() => PauseButton();
 
     private void Start()
     {
-        if (ButtonManagement.activeInHierarchy)
-            IsManagementOnAndroidOn = true;
+        if (_buttonManagement.activeInHierarchy)
+            _isManagementOnAndroidOn = true;
     }
 
     private void PauseButton()
     {
-        if (Settings != null && !Settings.activeInHierarchy)
+        if (_settings != null && !_settings.activeInHierarchy)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
                 Pause();
@@ -30,25 +33,26 @@ public class PauseMenu : MonoBehaviour
     }
     public void Pause()
     {
-        IsPause = !IsPause;
-        Canvas.SetActive(IsPause);
-        if (IsManagementOnAndroidOn)
-                ButtonManagement.SetActive(!IsPause);
-        if (IsPause)
-        {
-            Time.timeScale = 0;
-            BackGroundSound.mute = true;
-        }
-        else if (PlayerScriptRunner != null && !PlayerScriptRunner.IsLose)
-        {
-            Time.timeScale = 1;
-            BackGroundSound.mute = false;
-        }
-        else if (PlayerScriptCosmos != null && !PlayerScriptCosmos.IsLose)
-        {
-            Time.timeScale = 1;
-            BackGroundSound.mute = false;
-        }
+        _isPause = !_isPause;
+        _canvas.SetActive(_isPause);
+        
+        if (_isManagementOnAndroidOn)
+                _buttonManagement.SetActive(!_isPause);
+        if (_isPause)
+            SetStateBackGroundSoundAndTimeScale(0, true);
+        
+        else if (_playerScriptRunner != null && !_playerScriptRunner._isLose)
+            SetStateBackGroundSoundAndTimeScale(1, false);
+        
+        else if (_playerScriptCosmos != null && !_playerScriptCosmos.IsLose)
+            SetStateBackGroundSoundAndTimeScale(1, false);
+        
         else Time.timeScale = 1;
+    }
+    private void SetStateBackGroundSoundAndTimeScale(int valueTimeScale, bool valueBackgroundSound)
+    {
+        Time.timeScale = valueTimeScale;
+        if (_backgroundSound != null)
+            _backgroundSound.mute = valueBackgroundSound;
     }
 }

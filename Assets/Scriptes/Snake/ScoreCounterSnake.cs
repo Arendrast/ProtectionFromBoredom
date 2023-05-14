@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class ScoreCounterSnake : MonoBehaviour
 {
-    [SerializeField] private TMPro.TMP_Text TextScoreCounter;
-    public int Score;
+    [SerializeField] private TMPro.TMP_Text _textScoreCounter;
+    private int _score; 
 
     private void Update()
     {
         if (Time.timeScale == 1)
-            TextScoreCounter.text = Score.ToString();
+            _textScoreCounter.text = _score.ToString();
     }
+
+    public void AddPoint() => _score++;
+
 }

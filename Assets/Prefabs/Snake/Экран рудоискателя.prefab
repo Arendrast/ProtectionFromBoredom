@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1929802149273427102}
   - component: {fileID: 1929802149273427103}
   - component: {fileID: 1929802149273427096}
-  - component: {fileID: 1929802149273427100}
   - component: {fileID: 1929802149273427101}
   - component: {fileID: 4995621189446757021}
   m_Layer: 0
@@ -123,8 +122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f0976d2e1dbcd409542cb102898d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segmentPrefab: {fileID: 6544193968495982285, guid: 823a4324985db694a868151fce76c20c, type: 3}
-  segments: []
+  _segmentList: []
+  _segmentPrefab: {fileID: 0}
 --- !u!114 &1929802149273427096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,24 +136,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0892f990085eccb4ab0d622cb3f8f7a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: {x: 1, y: 0}
-  segmentsSnake: {fileID: 1929802149273427103}
-  scoreCounter: {fileID: 1929802149273427101}
-  SpeedMove: 2
-  TimerOnStart: 1
---- !u!114 &1929802149273427100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1929802149273427093}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65fd4933bf4433e408d26261c509a59a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  snakeManagement: {fileID: 1929802149273427096}
+  _segmentsSnake: {fileID: 0}
+  _scoreCounter: {fileID: 0}
+  _inputVector: {x: 1, y: 0}
+  IsMove: 0
+  _timerOnStart: 1
 --- !u!114 &1929802149273427101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,8 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01933ebbc4b3504797277728e18ece3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textScoreCounter: {fileID: 0}
-  scoreCounter: 0
+  _textScoreCounter: {fileID: 0}
 --- !u!60 &4995621189446757021
 PolygonCollider2D:
   m_ObjectHideFlags: 0

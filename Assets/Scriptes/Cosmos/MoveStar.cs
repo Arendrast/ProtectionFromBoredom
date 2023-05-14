@@ -1,49 +1,59 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 public class MoveStar : MonoBehaviour
 {
-    [SerializeField] private GameObject NeighboringStars;
-    [SerializeField] private float SpeedMove;
-    [SerializeField] private float DownBorder = -12.96f;
-    [SerializeField] private float HeightObject = 12.96f;
-    private SharedListLibrary SharedListLibraryLink;
-    private SpriteRenderer SpriteRendererComponent;
-    private Rigidbody2D Rb;
+    [SerializeField] private GameObject _neighboringStars;
+    
+    [SerializeField] private float _speedMove;
+    [SerializeField] private float _downBorder = -12.96f;
+    [SerializeField] private float _heightObject = 12.96f;
+
+    private float _fixedDeltaTime = 0.02f; 
+
+    private StorageOfLocationOfStars _storageOfLocationOfStars;
+    
+    private SpriteRenderer _spriteRenderer;
+    
+    private Rigidbody2D _rb;
     private void Awake()
     {
-        var CameraCash = FindObjectOfType<Camera>();
-        SharedListLibraryLink = CameraCash.GetComponent<SharedListLibrary>();
-        Rb = GetComponent<Rigidbody2D>();
-        SpriteRendererComponent = GetComponent<SpriteRenderer>();
-        Time.fixedDeltaTime = 0.02f;
-        Rb.gravityScale = 0;
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _rb = GetComponent<Rigidbody2D>();
+        
+        _rb.gravityScale = 0;
+        
+        Time.fixedDeltaTime = _fixedDeltaTime;
+
         InvokeRepeating(nameof(Velocity), 0, 1);
     }
 
-    private void Start() => SpriteRendererComponent.sprite = SharedListLibraryLink.ListOfStarLocations[Random.Range(0, SharedListLibraryLink.ListOfStarLocations.Count)];
+    private void Start()
+    {
+        _storageOfLocationOfStars = FindObjectOfType<StorageOfLocationOfStars>();
+        _spriteRenderer.sprite = _storageOfLocationOfStars.ListOfStarLocations[Random.Range(0, _storageOfLocationOfStars.ListOfStarLocations.Count)];  
+    } 
     
 
     private void FixedUpdate()
     {
-        Teleport();
+        UpdatePosition();
         Move();
     }
 
-    private void Move() => Rb.velocity = Vector2.down * SpeedMove;
+    private void Move() => _rb.velocity = Vector2.down * _speedMove;
 
-    private void Velocity() => SpeedMove += 0.03333333334f;
+    private void Velocity() => _speedMove += 0.03333333334f;
     
-    private void Teleport()
+    private void UpdatePosition()
     {
-        if (gameObject.transform.position.y <= DownBorder)
+        if (gameObject.transform.position.y <= _downBorder)
         {
-            var PositionNeighboring = NeighboringStars.transform.position;
-            transform.position = new Vector2(PositionNeighboring.x, PositionNeighboring.y + HeightObject);
-            var RandomRotation = Random.Range(0, 2);
-            transform.rotation = Quaternion.Euler(0, 0, RandomRotation == 0 ? 0 : 180);
-            SpriteRendererComponent.sprite = SharedListLibraryLink.ListOfStarLocations[Random.Range(0, SharedListLibraryLink.ListOfStarLocations.Count)];
+            var positionNeighboring = _neighboringStars.transform.position;
+            transform.position = new Vector2(positionNeighboring.x, positionNeighboring.y + _heightObject);
+            var randomRotation = Random.Range(0, 2);
+            transform.rotation = Quaternion.Euler(0, 0, randomRotation == 0 ? 0 : 180);
+            _spriteRenderer.sprite = _storageOfLocationOfStars.ListOfStarLocations[Random.Range(0, _storageOfLocationOfStars.ListOfStarLocations.Count)];
         } 
     }
 }

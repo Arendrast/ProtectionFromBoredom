@@ -2,92 +2,94 @@ using UnityEngine;
 
 public class ShootingSystemAndroid : MonoBehaviour
 {
-    [SerializeField] private ButtonShootingCosmos LeftButtonShootingCosmosScript;
-    [SerializeField] private ButtonShootingCosmos RightButtonShootingCosmosScript;
-    [SerializeField] private ButtonShootingCosmos LeftButtonShootingBulletCosmosScript;
-    [SerializeField] private ButtonShootingCosmos RightButtonShootingBulletCosmosScript;
-    private ShootingSystemLibrary SharedListLibraryScript;
-    private float DelayShootingLeftBlaster = 0.5f;
-    private float DelayShootingRightBlaster = 0.5f;
+    [SerializeField] private ButtonShootingCosmos _leftButtonShootingCosmos;
+    [SerializeField] private ButtonShootingCosmos _rightButtonShootingCosmos;
 
-    private void Start() => SharedListLibraryScript = FindObjectOfType<ShootingSystemLibrary>();
+    private ShootingSystemLibrary _shootingSystemLibrary;
     
+    private float _delayOfShootingOfLeftBlaster = 0.5f;
+    private float _delayOfShootingOfRightBlaster = 0.5f;
+
+    private bool _isDisableUnnecessary;
+
+    private void Start() => _shootingSystemLibrary = GetComponent<ShootingSystemLibrary>();
     
     private void Update()
     {
         if (Time.timeScale == 1)
         {
-            ShootManagementBullets();
+            ShootManagementBlasters();
             ShootManagementRays();
             UpdateDelay();
         }
         else
         {
-            while (!SharedListLibraryScript.OneCheckOnLose)
+            if (!_isDisableUnnecessary)
             {
-                SharedListLibraryScript.RightRay.SetActive(false);
-                SharedListLibraryScript.LeftRay.SetActive(false);
-                SharedListLibraryScript.IsShootingLeftRay = false;
-                SharedListLibraryScript.IsShootingRightRay = false;
-                SharedListLibraryScript.SoundRay.mute = true;
-                SharedListLibraryScript.OneCheckOnLose = true;
+                _shootingSystemLibrary.DisableUnnecessaryWhenLosing();
+                _isDisableUnnecessary = true;
             }
+            
         }
+    }
+
+    private void ShootManagementBlasters()
+    {
+        if (_shootingSystemLibrary.CartridgeTypeCounter % 2 == 0)
+        {
+            if (_leftButtonShootingCosmos.IsButtonPressed && _shootingSystemLibrary.IsCanLeftBlasterShoot && _delayOfShootingOfLeftBlaster < 0)
+            {
+                _shootingSystemLibrary.DeterminePositionOfLeftBlasters();
+                MakeBlasterShot(ref _delayOfShootingOfLeftBlaster, _shootingSystemLibrary.CurrentPositionSpawnOfLeftBullets);
+            }
+            else
+                _shootingSystemLibrary.SetIsShootingLeftRay(false);
+
+            if (_rightButtonShootingCosmos.IsButtonPressed && _shootingSystemLibrary.IsCanRightBlasterShoot && _delayOfShootingOfRightBlaster < 0)
+            {
+                _shootingSystemLibrary.DeterminePositionOfRightBlasters();
+                MakeBlasterShot(ref _delayOfShootingOfRightBlaster, _shootingSystemLibrary.CurrentPositionSpawnOfRightBullets);
+            }
+            else
+                _shootingSystemLibrary.SetIsShootingRightRay(false);
+        }
+    }
+
+    private void MakeBlasterShot(ref float delayOfShooting, Vector2 currentPosition)
+    {
+        _shootingSystemLibrary.CreateBulletInBlaster(currentPosition);
+        delayOfShooting = 0.5f;
     }
     
     private void ShootManagementRays()
     {
-        if (SharedListLibraryScript.CartridgeTypeCounter % 2 is 1 or -1)
+        if (_shootingSystemLibrary.CartridgeTypeCounter % 2 == 1 || _shootingSystemLibrary.CartridgeTypeCounter % 2 == 1)
         {
-            if (LeftButtonShootingCosmosScript.IsButtonPressed && SharedListLibraryScript.IsCanLeftRayShoot)
-               SharedListLibraryScript.CreateRayInLeftShell();
+            if (_leftButtonShootingCosmos.IsButtonPressed && _shootingSystemLibrary.IsCanLeftRayShoot)
+                _shootingSystemLibrary.CreateRayInLeftBlaster();
             else
             {
-                SharedListLibraryScript.LeftRay.SetActive(false);
-                SharedListLibraryScript.IsShootingLeftRay = false;
+                _shootingSystemLibrary.LeftRay.SetActive(false);
+                _shootingSystemLibrary.SetIsShootingLeftRay(false);
             }
 
-            if (RightButtonShootingCosmosScript.IsButtonPressed && SharedListLibraryScript.IsCanRightRayShoot)
-                SharedListLibraryScript.CreateRayInRightShell();
+            if (_rightButtonShootingCosmos.IsButtonPressed && _shootingSystemLibrary.IsCanRightRayShoot)
+                _shootingSystemLibrary.CreateRayInRightShell();
             else
             {
-                SharedListLibraryScript.RightRay.SetActive(false);
-                SharedListLibraryScript.IsShootingRightRay = false;
+                _shootingSystemLibrary.RightRay.SetActive(false);
+                _shootingSystemLibrary.SetIsShootingRightRay(false);
             }
-            SharedListLibraryScript.SoundRay.mute = !SharedListLibraryScript.IsShootingLeftRay && !SharedListLibraryScript.IsShootingRightRay;
+            _shootingSystemLibrary.SoundRay.mute = !_shootingSystemLibrary.IsShootingLeftRay && !_shootingSystemLibrary.IsShootingRightRay;
         }
     }
     
-    private void ShootManagementBullets()
-    {
-        if (SharedListLibraryScript.CartridgeTypeCounter % 2 == 0)
-        {
-            if (LeftButtonShootingBulletCosmosScript.IsButtonPressed && SharedListLibraryScript.IsCanLeftBlasterShoot && DelayShootingLeftBlaster < 0)
-            {
-                SharedListLibraryScript.DeterminingPositionsOfLeftBlasters();
-                SharedListLibraryScript.CreateBulletInShell(SharedListLibraryScript.CurrentPositionForLeftBullets);
-                DelayShootingLeftBlaster = 0.5f;
-            }
-            else
-                SharedListLibraryScript.IsShootingLeftBlaster = false;
-
-            if (RightButtonShootingBulletCosmosScript.IsButtonPressed && SharedListLibraryScript.IsCanRightBlasterShoot && DelayShootingRightBlaster < 0)
-            {
-                SharedListLibraryScript.DeterminingPositionsOfRightBlasters();
-                SharedListLibraryScript.CreateBulletInShell(SharedListLibraryScript.CurrentPositionForRightBullets);
-                DelayShootingRightBlaster = 0.5f;
-            }
-            else
-                SharedListLibraryScript.IsShootingRightBlaster = false;
-        }
-    }
-
     private void UpdateDelay()
     {
-        if (DelayShootingLeftBlaster > 0)
-            DelayShootingLeftBlaster -= Time.deltaTime;
+        if (_delayOfShootingOfLeftBlaster > 0)
+            _delayOfShootingOfLeftBlaster -= Time.deltaTime;
         
-        if (DelayShootingRightBlaster > 0)
-            DelayShootingRightBlaster -= Time.deltaTime;
+        if (_delayOfShootingOfRightBlaster > 0)
+            _delayOfShootingOfRightBlaster -= Time.deltaTime;
     }
 }

@@ -2,75 +2,72 @@ using UnityEngine;
 
 public class ShootingSystemPC : MonoBehaviour
 {
-    private ShootingSystemLibrary SharedListLibraryScript;
+    private ShootingSystemLibrary _shootingSystemLibrary;
     
-    private void Start() => SharedListLibraryScript = FindObjectOfType<ShootingSystemLibrary>();
+    private void Start() => _shootingSystemLibrary = FindObjectOfType<ShootingSystemLibrary>();
+    
+    private bool _isDisableUnnecessary;
     
     private void Update()
     {
         if (Time.timeScale == 1)
         {
-            ShootManagementBullets();
+            ShootManagementBlasters();
             ShootManagementRays();
-            SharedListLibraryScript.ChangingCartridgeType();
+            _shootingSystemLibrary.ChangeCartridgeType();
+            _shootingSystemLibrary.SoundRay.mute = !_shootingSystemLibrary.IsShootingLeftRay && !_shootingSystemLibrary.IsShootingRightRay;
         }
         else
         {
-            while (!SharedListLibraryScript.OneCheckOnLose)
+            if (!_isDisableUnnecessary)
             {
-                SharedListLibraryScript.RightRay.SetActive(false);
-                SharedListLibraryScript.LeftRay.SetActive(false);
-                SharedListLibraryScript.IsShootingLeftRay = false;
-                SharedListLibraryScript.IsShootingRightRay = false;
-                SharedListLibraryScript.SoundRay.mute = true;
-                SharedListLibraryScript.OneCheckOnLose = true;
+                _shootingSystemLibrary.DisableUnnecessaryWhenLosing();
+                _isDisableUnnecessary = true;
             }
         }
     }
     
-    private void ShootManagementBullets()
+    private void ShootManagementBlasters()
     {
-        if (SharedListLibraryScript.CartridgeTypeCounter % 2 == 0)
+        if (_shootingSystemLibrary.CartridgeTypeCounter % 2 == 0)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0) && SharedListLibraryScript.IsCanLeftBlasterShoot)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && _shootingSystemLibrary.IsCanLeftBlasterShoot)
             {
-                SharedListLibraryScript.DeterminingPositionsOfLeftBlasters();
-                SharedListLibraryScript.CreateBulletInShell(SharedListLibraryScript.CurrentPositionForLeftBullets);
+                _shootingSystemLibrary.DeterminePositionOfLeftBlasters();
+                _shootingSystemLibrary.CreateBulletInBlaster(_shootingSystemLibrary.CurrentPositionSpawnOfLeftBullets);
             }
             else
-                SharedListLibraryScript.IsShootingLeftBlaster = false;
+                _shootingSystemLibrary.SetIsShootingLeftBlaster(false);
 
-            if (Input.GetKeyDown(KeyCode.Mouse1) &&  SharedListLibraryScript.IsCanRightBlasterShoot)
+            if (Input.GetKeyDown(KeyCode.Mouse1) &&  _shootingSystemLibrary.IsCanRightBlasterShoot)
             {
-                SharedListLibraryScript.DeterminingPositionsOfRightBlasters();
-                SharedListLibraryScript.CreateBulletInShell(SharedListLibraryScript.CurrentPositionForRightBullets);
+                _shootingSystemLibrary.DeterminePositionOfRightBlasters();
+                _shootingSystemLibrary.CreateBulletInBlaster(_shootingSystemLibrary.CurrentPositionSpawnOfRightBullets);
             }
             else
-                SharedListLibraryScript.IsShootingRightBlaster = false;
-            
+                _shootingSystemLibrary.SetIsShootingRightBlaster(false);
         }
     }
 
     private void ShootManagementRays()
     {
-        if (SharedListLibraryScript.CartridgeTypeCounter % 2 is 1 or -1)
+        if (_shootingSystemLibrary.CartridgeTypeCounter % 2 == 1 || _shootingSystemLibrary.CartridgeTypeCounter % 2 == -1)
         {
-            if (Input.GetKey(KeyCode.Mouse0) &&  SharedListLibraryScript.IsCanLeftRayShoot)
-                SharedListLibraryScript.CreateRayInLeftShell();
+            if (Input.GetKey(KeyCode.Mouse0) &&  _shootingSystemLibrary.IsCanLeftRayShoot)
+                _shootingSystemLibrary.CreateRayInLeftBlaster();
             else
             {
-                SharedListLibraryScript.LeftRay.SetActive(false);
-                SharedListLibraryScript.IsShootingLeftRay = false;
+                _shootingSystemLibrary.LeftRay.SetActive(false);
+                _shootingSystemLibrary.SetIsShootingLeftRay(false);
             }
 
-            if (Input.GetKey(KeyCode.Mouse1) &&  SharedListLibraryScript.IsCanRightRayShoot)
-                SharedListLibraryScript.CreateRayInRightShell();
+            if (Input.GetKey(KeyCode.Mouse1) &&  _shootingSystemLibrary.IsCanRightRayShoot)
+                _shootingSystemLibrary.CreateRayInRightShell();
             else
             {
-                SharedListLibraryScript.RightRay.SetActive(false);
-                SharedListLibraryScript.IsShootingRightRay = false;
+                _shootingSystemLibrary.RightRay.SetActive(false);
+                _shootingSystemLibrary.SetIsShootingRightRay(false);
             }
-            SharedListLibraryScript.SoundRay.mute = !SharedListLibraryScript.IsShootingLeftRay && !SharedListLibraryScript.IsShootingRightRay;
         } 
     }
 }

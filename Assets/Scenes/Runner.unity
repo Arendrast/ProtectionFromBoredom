@@ -407,7 +407,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &188293345
@@ -602,7 +602,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &254042686
@@ -765,8 +765,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185a81176bb7b4490e2628f076ed55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMove: 2
-  NeighboringBackGround: {fileID: 1240563435}
+  _speedMove: 2
+  _neighboringBackGround: {fileID: 1240563435}
 --- !u!1 &365421254
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,7 +916,7 @@ GameObject:
   - component: {fileID: 400498134}
   - component: {fileID: 400498136}
   m_Layer: 0
-  m_Name: "MHero \u0440\u0438\u0441\u043E\u0432\u0430\u043D\u043D\u044B\u0439"
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1001,10 +1001,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5763e27622c58c54f8f9f43c3c78cc41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackgroundSound: {fileID: 700529316}
-  LoseUI: {fileID: 1111876831}
-  Velocity: 4
-  IsLose: 0
+  _backgroundSound: {fileID: 700529316}
+  _loseUI: {fileID: 1111876831}
 --- !u!50 &400498134
 Rigidbody2D:
   serializedVersion: 4
@@ -1539,7 +1537,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 700529312}
         m_TargetAssemblyTypeName: ButtonControl, Assembly-CSharp
-        m_MethodName: ButtonNewGame
+        m_MethodName: StartNewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1706,8 +1704,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185a81176bb7b4490e2628f076ed55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMove: 2
-  NeighboringBackGround: {fileID: 759294978}
+  _speedMove: 2
+  _neighboringBackGround: {fileID: 759294978}
 --- !u!1 &666244548
 GameObject:
   m_ObjectHideFlags: 0
@@ -1726,7 +1724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &666244549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1924,12 +1922,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9820df23118eac54ea798ec6899af4a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas: {fileID: 1818476069}
-  ButtonManagement: {fileID: 666244548}
-  PlayerScriptRunner: {fileID: 400498132}
-  PlayerScriptCosmos: {fileID: 0}
-  Settings: {fileID: 1827213871}
-  BackGroundSound: {fileID: 700529316}
+  _canvas: {fileID: 1818476069}
+  _buttonManagement: {fileID: 666244548}
+  _settings: {fileID: 1827213871}
+  _playerScriptRunner: {fileID: 400498132}
+  _playerScriptCosmos: {fileID: 0}
+  _backgroundSound: {fileID: 700529316}
 --- !u!114 &700529314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1942,9 +1940,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b661612bafe4104a8aec523abc21e14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreCounterText: {fileID: 963842920}
-  BestResultText: {fileID: 365421256}
-  PlayerRunner: {fileID: 400498132}
+  _scoreCounterText: {fileID: 963842920}
+  _bestResultText: {fileID: 365421256}
+  _playerRunnerScript: {fileID: 400498132}
+  _unitSpeedAddingPoints: 0.05
 --- !u!114 &700529315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1957,7 +1956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9068b1a31726a264fad582e4b9c924db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsMenu: {fileID: 1827213871}
+  _settingsMenu: {fileID: 1827213871}
 --- !u!82 &700529316
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2066,8 +2065,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba89823c0ca425b44928f5c11fa0a0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 977922796}
-  Mixer: {fileID: 24100000, guid: ed64e44c0c8ac2240a5aa476ba8b1ec6, type: 2}
+  _slider: {fileID: 977922796}
+  _mixer: {fileID: 24100000, guid: ed64e44c0c8ac2240a5aa476ba8b1ec6, type: 2}
 --- !u!1 &759294978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2187,8 +2186,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185a81176bb7b4490e2628f076ed55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMove: 2
-  NeighboringBackGround: {fileID: 640532209}
+  _speedMove: 2
+  _neighboringBackGround: {fileID: 640532209}
 --- !u!1 &769841301
 GameObject:
   m_ObjectHideFlags: 0
@@ -2444,8 +2443,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185a81176bb7b4490e2628f076ed55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMove: 4
-  NeighboringBackGround: {fileID: 1089746272}
+  _speedMove: 4
+  _neighboringBackGround: {fileID: 1089746272}
 --- !u!1 &878400420
 GameObject:
   m_ObjectHideFlags: 0
@@ -3096,11 +3095,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49c903209f17d5469b908684c088c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StoneOne: {fileID: 2790950337850054407, guid: 72f52cc4c5ebf894e9ce39b5da6e21c9, type: 3}
-  StoneTwo: {fileID: 7615588183421699611, guid: 88d871116fc980949a0f7022ca1e4596, type: 3}
-  StoneThree: {fileID: 7105984421001392740, guid: 3186f60734ba1d94e87effecf99d0f68, type: 3}
-  StoneFour: {fileID: 3467719400523663720, guid: 31f95175a7f2818458e1eb879b6c36ba, type: 3}
-  StoneList: []
+  _stoneOnePrefab: {fileID: 2790950337850054407, guid: 72f52cc4c5ebf894e9ce39b5da6e21c9, type: 3}
+  _stoneTwoPrefab: {fileID: 7615588183421699611, guid: 88d871116fc980949a0f7022ca1e4596, type: 3}
+  _stoneThreePrefab: {fileID: 7105984421001392740, guid: 3186f60734ba1d94e87effecf99d0f68, type: 3}
+  _stoneFourPrefab: {fileID: 3467719400523663720, guid: 31f95175a7f2818458e1eb879b6c36ba, type: 3}
 --- !u!50 &1089746275
 Rigidbody2D:
   serializedVersion: 4
@@ -3134,8 +3132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185a81176bb7b4490e2628f076ed55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMove: 4
-  NeighboringBackGround: {fileID: 774659615}
+  _speedMove: 4
+  _neighboringBackGround: {fileID: 774659615}
 --- !u!212 &1089746277
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3425,8 +3423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185a81176bb7b4490e2628f076ed55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMove: 1
-  NeighboringBackGround: {fileID: 1424707005}
+  _speedMove: 1
+  _neighboringBackGround: {fileID: 1424707005}
 --- !u!1 &1240563435
 GameObject:
   m_ObjectHideFlags: 0
@@ -3546,8 +3544,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185a81176bb7b4490e2628f076ed55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMove: 2
-  NeighboringBackGround: {fileID: 351649890}
+  _speedMove: 2
+  _neighboringBackGround: {fileID: 351649890}
 --- !u!1 &1405350945
 GameObject:
   m_ObjectHideFlags: 0
@@ -3679,13 +3677,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1405350945}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03ff538be1279214587db0871b8c4768, type: 3}
+  m_Script: {fileID: 11500000, guid: c11cb9667650a7a4084cc8fb5b4c972d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerRigidbody: {fileID: 400498134}
-  PlayerScript: {fileID: 400498132}
-  ButtonDownScript: {fileID: 1942454616}
-  IsButtonPressed: 0
+  _directionVelocity: {x: 0, y: 1}
+  _playerRB: {fileID: 400498134}
+  _playerScript: {fileID: 400498132}
+  _scriptOtherButton: {fileID: 1942454616}
 --- !u!1 &1424707005
 GameObject:
   m_ObjectHideFlags: 0
@@ -3805,8 +3803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3185a81176bb7b4490e2628f076ed55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedMove: 1
-  NeighboringBackGround: {fileID: 1141314223}
+  _speedMove: 1
+  _neighboringBackGround: {fileID: 1141314223}
 --- !u!1 &1428049660
 GameObject:
   m_ObjectHideFlags: 0
@@ -4810,7 +4808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c11cb9667650a7a4084cc8fb5b4c972d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerRigidbody: {fileID: 400498134}
-  PlayerScript: {fileID: 400498132}
-  ButtonUpScript: {fileID: 1405350950}
-  IsButtonPressed: 0
+  _directionVelocity: {x: 0, y: -1}
+  _playerRB: {fileID: 400498134}
+  _playerScript: {fileID: 400498132}
+  _scriptOtherButton: {fileID: 1405350950}

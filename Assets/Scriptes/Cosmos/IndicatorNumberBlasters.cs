@@ -1,93 +1,70 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class IndicatorNumberBlasters : MonoBehaviour
 { 
     [Header("Strips")]
-    [SerializeReference] private Image ImageComponentLeftBlasterChargeStrips;
-    [SerializeReference] private Image ImageComponentRightBlasterChargeStrips;
-    [SerializeField] private Sprite FiveChargeStrips;
-    [SerializeField] private Sprite FourChargeStrips;
-    [SerializeField] private Sprite ThreeChargeStrips;
-    [SerializeField] private Sprite TwoChargeStrips;
-    [SerializeField] private Sprite OneChargeStrips;
-    [SerializeField] private Sprite ZeroChargeStrips;
-    private int NumberLeftBlasterCharge = 5;
-    private int NumberRightBlasterCharge = 5;
-    private const float TimeChargeRefresh = 2.5f;
-    private float ChargeRefreshTimerLeftBlaster = 2.5f;
-    private float ChargeRefreshTimerRightBlaster = 2.5f;
     
-    private ShootingSystemLibrary ShootingSystemLibraryScript;
-
-    private void Start() => ShootingSystemLibraryScript = GetComponent<ShootingSystemLibrary>();
+    [SerializeReference] private Image _imageComponentOfIndicatorOfLeftBlaster;
+    [SerializeReference] private Image _imageComponentOfIndicatorOfRightBlaster;
     
+    [SerializeField] private Sprite _fiveChargeStrip,_fourChargeStrip, _threeChargeStrip, _twoChargeStrip, _oneChargeStrip, _zeroChargeStrip;
+    
+    private int _numberOfLeftBlasterCharge = 5;
+    private int _numberOfRightBlasterCharge = 5;
+    
+    private const float _timeChargeRefresh = 2.5f;
+    private float _timeToRechargeLeftBlaster = 2.5f;
+    private float _timeToRechargeRightBlaster = 2.5f;
+    
+    private ShootingSystemLibrary _shootingSystemLibrary;
 
+    private void Start() => _shootingSystemLibrary = GetComponent<ShootingSystemLibrary>();
+    
     private void Update()
     {
         AdjustingShootingPermission();
         CheckingShootingBlaster();
-        DisplayingChargesLeftBlaster();
-        DisplayingChargesRightBlaster();
-        UpdateTimerRightBlaster();
-        UpdateTimerLeftBlaster();
+        UpdateDisplayOfIndicator(ref _imageComponentOfIndicatorOfRightBlaster, _numberOfRightBlasterCharge);
+        UpdateDisplayOfIndicator(ref _imageComponentOfIndicatorOfLeftBlaster, _numberOfLeftBlasterCharge);
+        UpdateTimeBeforeAddingCharge(ref _timeToRechargeRightBlaster, ref _numberOfRightBlasterCharge);
+        UpdateTimeBeforeAddingCharge(ref _timeToRechargeLeftBlaster, ref _numberOfLeftBlasterCharge);
     }
     private void CheckingShootingBlaster()
     {
-        if (ShootingSystemLibraryScript.IsShootingLeftBlaster)
-            NumberLeftBlasterCharge--;
+        if (_shootingSystemLibrary.IsShootingLeftBlaster)
+            _numberOfLeftBlasterCharge--;
 
-        if (ShootingSystemLibraryScript.IsShootingRightBlaster)
-            NumberRightBlasterCharge--;
+        if (_shootingSystemLibrary.IsShootingRightBlaster)
+            _numberOfRightBlasterCharge--;
     }
-    private void DisplayingChargesLeftBlaster()
+    private void UpdateDisplayOfIndicator(ref Image imageComponent, int numberOfCharge)
     {
-        ImageComponentLeftBlasterChargeStrips.sprite = NumberLeftBlasterCharge switch
+        imageComponent.sprite = numberOfCharge switch
         {
-            5 => FiveChargeStrips,
-            4 => FourChargeStrips,
-            3 => ThreeChargeStrips,
-            2 => TwoChargeStrips,
-            1 => OneChargeStrips,
-            _ => ZeroChargeStrips
-        };
-    }
-    private void DisplayingChargesRightBlaster()
-    {
-        ImageComponentRightBlasterChargeStrips.sprite = NumberRightBlasterCharge switch
-        {
-            5 => FiveChargeStrips,
-            4 => FourChargeStrips,
-            3 => ThreeChargeStrips,
-            2 => TwoChargeStrips,
-            1 => OneChargeStrips,
-            _ => ZeroChargeStrips
+            5 => _fiveChargeStrip,
+            4 => _fourChargeStrip,
+            3 => _threeChargeStrip,
+            2 => _twoChargeStrip,
+            1 => _oneChargeStrip,
+            _ => _zeroChargeStrip
         };
     }
     private void AdjustingShootingPermission()
     {
-        ShootingSystemLibraryScript.IsCanRightBlasterShoot = NumberRightBlasterCharge > 0;
-        ShootingSystemLibraryScript.IsCanLeftBlasterShoot = NumberLeftBlasterCharge > 0;
+        _shootingSystemLibrary.SetIsCanShootingRightBlaster(_numberOfRightBlasterCharge > 0);
+        _shootingSystemLibrary.SetIsCanShootingLeftBlaster(_numberOfLeftBlasterCharge > 0);
+        Debug.Log(_numberOfLeftBlasterCharge);
+        Debug.Log(_numberOfRightBlasterCharge);
     }
-    private void UpdateTimerLeftBlaster()
+    private void UpdateTimeBeforeAddingCharge(ref float timeToChargeUpdate, ref int numberOfCharge)
     {
-            if (ChargeRefreshTimerLeftBlaster < 0)
+            if (timeToChargeUpdate < 0)
             {
-                NumberLeftBlasterCharge++;
-                ChargeRefreshTimerLeftBlaster = TimeChargeRefresh;
+                numberOfCharge++;
+                timeToChargeUpdate = _timeChargeRefresh;
             }
-            if (NumberLeftBlasterCharge < 5)
-             ChargeRefreshTimerLeftBlaster -= Time.deltaTime;
-    }
-    private void UpdateTimerRightBlaster()
-    {
-            if (ChargeRefreshTimerRightBlaster < 0)
-            {
-                NumberRightBlasterCharge++;
-                ChargeRefreshTimerRightBlaster = TimeChargeRefresh;
-            }
-            if (NumberRightBlasterCharge < 5)
-                ChargeRefreshTimerRightBlaster -= Time.deltaTime;
+            if (numberOfCharge < 5)
+             timeToChargeUpdate -= Time.deltaTime;
     }
 }

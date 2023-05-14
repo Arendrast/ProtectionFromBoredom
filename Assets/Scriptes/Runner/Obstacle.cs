@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    private Rigidbody2D Rb;
-    private float SpeedMove = 12;
-    private const float LeftBorder = -14f;
-    private const float RightBorder = 12.4f;
-    private bool IsMove;
+    private Rigidbody2D _rb;
+    private float _speedMove = 12;
+    private const float _leftBorder = -14f;
+    private const float _rightBorder = 12.4f;
+    private bool _isMove;
     private void Awake()
     {
-        Rb = GetComponent<Rigidbody2D>();
-        Rb.gravityScale = 0;
+        _rb = GetComponent<Rigidbody2D>();
+        _rb.gravityScale = 0;
         InvokeRepeating(nameof(UpdateVelocity), 0, 1);
-        Rb.velocity = Vector2.zero;
+        _rb.velocity = Vector2.zero;
     }
     private void FixedUpdate() => Move();
     private void Update()
@@ -21,18 +21,18 @@ public class Obstacle : MonoBehaviour
         MoveAgain();
     }
 
-    private void UpdateVelocity() => SpeedMove += 0.03333333334f;
+    private void UpdateVelocity() => _speedMove += 0.03333333334f;
     
 
-    private void Move() { if (IsMove) Rb.velocity = Vector2.left * SpeedMove; }
+    private void Move() { if (_isMove) _rb.velocity = Vector2.left * _speedMove; }
 
     private void StopMove()
     {
-        if (gameObject.transform.position.x <= LeftBorder)
+        if (gameObject.transform.position.x <= _leftBorder)
         {
-            IsMove = false;
-            Rb.velocity = Vector2.zero;
+            _isMove = false;
+            _rb.velocity = Vector2.zero;
         }
     }
-    private void MoveAgain() { if (gameObject.transform.position.x >= RightBorder) IsMove = true; }
+    private void MoveAgain() { if (gameObject.transform.position.x >= _rightBorder) _isMove = true; }
 }

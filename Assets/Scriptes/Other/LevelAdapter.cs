@@ -3,8 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelAdapter : MonoBehaviour
 {
-    public void StartLevelSnake() => SceneManager.LoadScene(3);
-    public void StartLevelRunner() => SceneManager.LoadScene(4);
-    public void StartLevelCosmos() => SceneManager.LoadScene(5);
+    public void OpenLevelSnake() => SceneManager.LoadScene(3);
+    public void OpenLevelRunner() => SceneManager.LoadScene(4);
+    public void OpenLevelCosmos() => SceneManager.LoadScene(5);
 }
 

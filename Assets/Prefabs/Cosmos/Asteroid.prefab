@@ -127,15 +127,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63bf3e7cdeca53c47b88e4602e0e4dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirstTypeOfAsteroidCollider: {fileID: 423443570813168128}
-  SecondTypeOfAsteroidCollider: {fileID: 608974774017531115}
-  ThirdTypeOfAsteroidCollider: {fileID: 5193230560951052997}
-  FourthTypeOfAsteroidCollider: {fileID: 770875725046723568}
-  FifthTypeOfAsteroidCollider: {fileID: 8050168898616849401}
-  SixthTypeOfAsteroidCollider: {fileID: 2934489656043107856}
-  SeventhTypeOfAsteroidCollider: {fileID: 5323484473165465625}
-  EighthTypeOfAsteroidCollider: {fileID: 5303437457326610359}
-  ListColliderOfAsteroid: []
+  _colliderOfFirstTypeOfAsteroid: {fileID: 423443570813168128}
+  _colliderOfSecondTypeOfAsteroid: {fileID: 608974774017531115}
+  _colliderOfThirdTypeOfAsteroid: {fileID: 5193230560951052997}
+  _colliderOfFourthTypeOfAsteroid: {fileID: 770875725046723568}
+  _colliderOfFifthTypeOfAsteroid: {fileID: 8050168898616849401}
+  _colliderOfSixthTypeOfAsteroid: {fileID: 2934489656043107856}
+  _colliderOfSeventhTypeOfAsteroid: {fileID: 5323484473165465625}
+  _colliderOfEighthTypeOfAsteroid: {fileID: 5303437457326610359}
 --- !u!60 &423443570813168128
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -146,7 +145,7 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -222,7 +221,7 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -294,7 +293,7 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -360,7 +359,7 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -442,7 +441,7 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -513,7 +512,7 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -612,7 +611,7 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -667,10 +666,10 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2302434183874875358}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

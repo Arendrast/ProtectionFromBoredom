@@ -3,12 +3,18 @@ using TMPro;
 using System.Collections;
 public class ScoreCounterCosmos : MonoBehaviour
 {
-    [SerializeField] private TMP_Text ScoreCounterText;
-    [SerializeField] private TMP_Text BestResultText;
-    [SerializeField] private PlayerCosmos PlayerCosmos;
-    private int NumberPoints;
-    private int BestResult;
-    private float TimeAddingPoints = 0.5f;
+    [SerializeField] private TMP_Text _scoreCounterText;
+    [SerializeField] private TMP_Text _bestResultText;
+    
+    [SerializeField] private PlayerCosmos _player;
+    
+    [SerializeField] private float _unitSpeedAddingPoints = 0.05f;
+    
+    private int _numberPoints;
+    private int _bestResult;
+    
+    private float _timeAddingPoints = 0.5f;
+    private float _updateFrequencyOfTimeOfAddingPoints = 15f;
 
     private void Awake()
     {
@@ -19,20 +25,20 @@ public class ScoreCounterCosmos : MonoBehaviour
     private void UpdateBestResultInBegin()
     {
         if (PlayerPrefs.HasKey("BestResultCosmos"))
-                BestResult = PlayerPrefs.GetInt("BestResultCosmos");
+                _bestResult = PlayerPrefs.GetInt("BestResultCosmos");
     }
 
     private IEnumerator UpdateTimeAddingPoints()
     {
-        yield return new WaitForSeconds(15);
-        TimeAddingPoints -= 0.05f;
+        yield return new WaitForSeconds(_updateFrequencyOfTimeOfAddingPoints);
+        _timeAddingPoints -= _unitSpeedAddingPoints;
         StartCoroutine(nameof(UpdateTimeAddingPoints));
     }
 
     private IEnumerator AddingPoints()
     {
-        yield return new WaitForSeconds(TimeAddingPoints);
-        NumberPoints++;
+        yield return new WaitForSeconds(_timeAddingPoints);
+        _numberPoints++;
         StartCoroutine(nameof(AddingPoints));
     }
 
@@ -46,20 +52,20 @@ public class ScoreCounterCosmos : MonoBehaviour
 
     private void IsLose()
     {
-        if (PlayerCosmos.IsLose)
+        if (_player.IsLose)
         {
                 SaveBestResult();
-                BestResultText.text = ($"{BestResult:0000}km");
+                _bestResultText.text = ($"{_bestResult:0000}km");
                 StopCoroutine(nameof(AddingPoints));
         }
     }
-    private void Equating() => ScoreCounterText.text = $"{NumberPoints:000000}km";
+    private void Equating() => _scoreCounterText.text = $"{_numberPoints:000000}km";
     private void SaveBestResult()
     { 
-        if (NumberPoints > BestResult)
+        if (_numberPoints > _bestResult)
         { 
-            BestResult = NumberPoints; 
-            PlayerPrefs.SetInt("BestResultCosmos", BestResult);
+            _bestResult = _numberPoints; 
+            PlayerPrefs.SetInt("BestResultCosmos", _bestResult);
         }
     }
 }

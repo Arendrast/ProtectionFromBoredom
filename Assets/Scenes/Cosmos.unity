@@ -377,7 +377,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0619a9a11c10fa4e8898580d4f3d094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsButtonPressed: 0
 --- !u!114 &243479842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,7 +552,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &290137261
@@ -583,7 +582,7 @@ GameObject:
   - component: {fileID: 366722865}
   - component: {fileID: 366722864}
   m_Layer: 0
-  m_Name: RightBorder (1)
+  m_Name: LowerBorder
   m_TagString: DownBorder
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -664,7 +663,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &366722866
@@ -720,6 +719,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &431351766
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1035,7 +1035,7 @@ GameObject:
   - component: {fileID: 576611570}
   - component: {fileID: 576611569}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: "\u0412\u0435\u0440\u0445\u043D\u044F\u044F \u043B\u0435\u0432\u0430\u044F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1054,7 +1054,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 755306133}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1264,10 +1264,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6aa419704d4944ea5a5473b36b6129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeighboringStars: {fileID: 1830486581}
-  SpeedMove: 5
-  DownBorder: -12.96
-  HeightObject: 12.96
+  _neighboringStars: {fileID: 1830486581}
+  _speedMove: 4
+  _downBorder: -12.96
+  _heightObject: 12.96
 --- !u!212 &708933738
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1333,7 +1333,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &708933740
 Rigidbody2D:
@@ -1448,10 +1448,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1404568734}
   - {fileID: 576611568}
-  - {fileID: 1070110186}
   - {fileID: 1654496402}
+  - {fileID: 1070110186}
+  - {fileID: 1404568734}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1509,7 +1509,7 @@ GameObject:
   - component: {fileID: 803096831}
   - component: {fileID: 803096830}
   - component: {fileID: 803096829}
-  - component: {fileID: 803096828}
+  - component: {fileID: 803096832}
   m_Layer: 5
   m_Name: "\u041A\u043D\u043E\u043F\u043A\u0430 \u0432\u043F\u0440\u0430\u0432\u043E"
   m_TagString: Untagged
@@ -1537,19 +1537,6 @@ RectTransform:
   m_AnchoredPosition: {x: -87, y: 67.285}
   m_SizeDelta: {x: 101.4676, y: 72.6825}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &803096828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 803096826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58cebb1751f64ed48a6f5510861dd07e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsButtonPressed: 0
 --- !u!114 &803096829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1632,6 +1619,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803096826}
   m_CullTransparentMesh: 1
+--- !u!114 &803096832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803096826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0619a9a11c10fa4e8898580d4f3d094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &888535194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1959,7 +1958,7 @@ GameObject:
   - component: {fileID: 1070110188}
   - component: {fileID: 1070110187}
   m_Layer: 5
-  m_Name: Image (4)
+  m_Name: "\u041D\u0438\u0436\u043D\u044F\u044F \u043B\u0435\u0432\u0430\u044F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2898,7 +2897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4637a9e768cb6db449fba59affe78d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsButtonPressed: 0
 --- !u!1 &1404568733
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,7 +2909,7 @@ GameObject:
   - component: {fileID: 1404568736}
   - component: {fileID: 1404568735}
   m_Layer: 5
-  m_Name: Image
+  m_Name: "\u041D\u0438\u0436\u043D\u044F\u044F \u043F\u0440\u0430\u0432\u0430\u044F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2930,7 +2928,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 755306133}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2987,7 +2985,7 @@ GameObject:
   - component: {fileID: 1654496404}
   - component: {fileID: 1654496403}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: "\u0412\u0435\u0440\u0445\u043D\u044F\u044F \u043F\u0440\u0430\u0432\u0430\u044F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3006,7 +3004,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 755306133}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3075,7 +3073,7 @@ GameObject:
   - component: {fileID: 1688513624}
   - component: {fileID: 1688513623}
   m_Layer: 0
-  m_Name: "\u041A\u043E\u043B\u043B\u0430\u0439\u0434\u0435\u0440"
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3093,25 +3091,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d605f60fdbf43f46aa2a4112d1425ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Particle: {fileID: 6920050085930405083, guid: ecd986d40cfff1a468451c93793d5b27, type: 3}
-  Rays: {fileID: 3977505189267597509, guid: 1f92929991b33244c9d30c47a89a2a55, type: 3}
   SoundShoot: {fileID: 1688513620}
-  Bullet: {fileID: 2210672571702083281, guid: 1c2e6fba65452c747a372b2939d765c5, type: 3}
   SoundRay: {fileID: 1688513621}
-  LeftRay: {fileID: 3977505189267597509, guid: 1f92929991b33244c9d30c47a89a2a55, type: 3}
-  RightRay: {fileID: 3977505189267597509, guid: 1f92929991b33244c9d30c47a89a2a55, type: 3}
-  CartridgeTypeCounter: 0
-  IsShootingLeftBlaster: 0
-  IsShootingRightBlaster: 0
-  IsShootingLeftRay: 0
-  IsShootingRightRay: 0
-  IsCanLeftBlasterShoot: 1
-  IsCanRightBlasterShoot: 1
-  IsCanLeftRayShoot: 1
-  IsCanRightRayShoot: 1
-  CurrentPositionForLeftBullets: {x: 0, y: 0}
-  CurrentPositionForRightBullets: {x: 0, y: 0}
-  OneCheckOnLose: 0
+  _particleSystem: {fileID: 6920050085930405083, guid: ecd986d40cfff1a468451c93793d5b27, type: 3}
+  _bullet: {fileID: 2210672571702083281, guid: 1c2e6fba65452c747a372b2939d765c5, type: 3}
+  _ray: {fileID: 3977505189267597509, guid: 1f92929991b33244c9d30c47a89a2a55, type: 3}
 --- !u!114 &1688513610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3124,10 +3108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b49b455e1fb1514681760bc1f9009e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FlightDirection: {x: 0, y: 0}
-  ButtonLeftOnAndroid: {fileID: 243479841}
-  ButtonRightOnAndroid: {fileID: 803096828}
-  ManagementOnAndroid: {fileID: 2012827462}
+  _buttonLeftOnAndroid: {fileID: 243479841}
+  _buttonRightOnAndroid: {fileID: 803096832}
+  _managementOnAndroid: {fileID: 2012827462}
 --- !u!114 &1688513611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3140,12 +3123,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70f0f008622eb94db9a1d3fcc2a93b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Particle: {fileID: 7465901634760120845, guid: 1baaf6c197af7e943aad7f1ad402c31a, type: 3}
-  BackgroundSound: {fileID: 1851917073}
-  OneDamage: {fileID: 21300000, guid: 31aeb4e1d94a2bb40adbd8b393a2addb, type: 3}
-  TwoDamage: {fileID: 21300000, guid: 42a134f31a570624694c9d2c43228440, type: 3}
-  LoseMenu: {fileID: 575699857}
-  IsLose: 0
+  _particleSystemWithPiecesOfPlayer: {fileID: 7465901634760120845, guid: 1baaf6c197af7e943aad7f1ad402c31a, type: 3}
+  _loseMenu: {fileID: 575699857}
+  _backgroundSound: {fileID: 1851917073}
+  _stateSpriteWithSingleDamageHits: {fileID: 21300000, guid: 31aeb4e1d94a2bb40adbd8b393a2addb, type: 3}
+  _stateSpriteWithTwoDamageHits: {fileID: 21300000, guid: 42a134f31a570624694c9d2c43228440, type: 3}
 --- !u!114 &1688513612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3158,15 +3140,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46023cf6fdbd2e647baa466e0d73e69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImageComponentLeftRayChargeStrips: {fileID: 1070110187}
-  ImageComponentRightRayChargeStrips: {fileID: 1404568735}
-  FiveChargeStrips: {fileID: 21300000, guid: 98afea35d12dc7643b729793382b27f4, type: 3}
-  FourChargeStrips: {fileID: 21300000, guid: 50071cc986d2dba488d14de281fa0e65, type: 3}
-  ThreeChargeStrips: {fileID: 21300000, guid: 507c5d470a7f6184a8540441c1f464b3, type: 3}
-  TwoChargeStrips: {fileID: 21300000, guid: 8231bfb0847beea4b9b2f26f756022d7, type: 3}
-  OneChargeStrips: {fileID: 21300000, guid: b041c13f891ca684a85aa96bd0fb7a43, type: 3}
-  ZeroChargeStrips: {fileID: 21300000, guid: 212d00e4110e1414283884a562f445aa, type: 3}
-  ShootingSystemLibraryScript: {fileID: 1688513609}
+  _imageComponentOfIndicatiorOfLeftRay: {fileID: 1070110187}
+  _imageComponentOfIndicatiorOfRightRay: {fileID: 1404568735}
+  _fiveChargeStrip: {fileID: 21300000, guid: 98afea35d12dc7643b729793382b27f4, type: 3}
+  _fourChargeStrip: {fileID: 21300000, guid: 50071cc986d2dba488d14de281fa0e65, type: 3}
+  _threeChargeStrip: {fileID: 21300000, guid: 507c5d470a7f6184a8540441c1f464b3, type: 3}
+  _twoChargeStrip: {fileID: 21300000, guid: 8231bfb0847beea4b9b2f26f756022d7, type: 3}
+  _oneChargeStrip: {fileID: 21300000, guid: b041c13f891ca684a85aa96bd0fb7a43, type: 3}
+  _zeroChargeStrip: {fileID: 21300000, guid: 212d00e4110e1414283884a562f445aa, type: 3}
+  _shootingSystemLibrary: {fileID: 1688513609}
 --- !u!114 &1688513613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3179,14 +3161,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bafad9f9c8813149ae4960e1c0ae9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImageComponentLeftBlasterChargeStrips: {fileID: 576611569}
-  ImageComponentRightBlasterChargeStrips: {fileID: 1654496403}
-  FiveChargeStrips: {fileID: 21300000, guid: 98afea35d12dc7643b729793382b27f4, type: 3}
-  FourChargeStrips: {fileID: 21300000, guid: 50071cc986d2dba488d14de281fa0e65, type: 3}
-  ThreeChargeStrips: {fileID: 21300000, guid: 507c5d470a7f6184a8540441c1f464b3, type: 3}
-  TwoChargeStrips: {fileID: 21300000, guid: 8231bfb0847beea4b9b2f26f756022d7, type: 3}
-  OneChargeStrips: {fileID: 21300000, guid: b041c13f891ca684a85aa96bd0fb7a43, type: 3}
-  ZeroChargeStrips: {fileID: 21300000, guid: 212d00e4110e1414283884a562f445aa, type: 3}
+  _imageComponentOfIndicatorOfLeftBlaster: {fileID: 576611569}
+  _imageComponentOfIndicatorOfRightBlaster: {fileID: 1654496403}
+  _fiveChargeStrip: {fileID: 21300000, guid: 98afea35d12dc7643b729793382b27f4, type: 3}
+  _fourChargeStrip: {fileID: 21300000, guid: 50071cc986d2dba488d14de281fa0e65, type: 3}
+  _threeChargeStrip: {fileID: 21300000, guid: 507c5d470a7f6184a8540441c1f464b3, type: 3}
+  _twoChargeStrip: {fileID: 21300000, guid: 8231bfb0847beea4b9b2f26f756022d7, type: 3}
+  _oneChargeStrip: {fileID: 21300000, guid: b041c13f891ca684a85aa96bd0fb7a43, type: 3}
+  _zeroChargeStrip: {fileID: 21300000, guid: 212d00e4110e1414283884a562f445aa, type: 3}
 --- !u!212 &1688513614
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3253,7 +3235,7 @@ Transform:
   m_Children:
   - {fileID: 431351767}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &1688513616
 PolygonCollider2D:
@@ -3361,6 +3343,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!82 &1688513620
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3591,10 +3574,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50aaacbc5df652e4bbdf6da9d47234cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LeftButtonShootingCosmosScript: {fileID: 1874543912}
-  RightButtonShootingCosmosScript: {fileID: 1331313691}
-  LeftButtonShootingBulletCosmosScript: {fileID: 1874543912}
-  RightButtonShootingBulletCosmosScript: {fileID: 1331313691}
+  _leftButtonShootingCosmos: {fileID: 1874543912}
+  _rightButtonShootingCosmos: {fileID: 1331313691}
 --- !u!114 &1688513624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3869,7 +3850,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1851917069}
         m_TargetAssemblyTypeName: ButtonControl, Assembly-CSharp
-        m_MethodName: ButtonNewGame
+        m_MethodName: StartNewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4016,10 +3997,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6aa419704d4944ea5a5473b36b6129, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NeighboringStars: {fileID: 708933736}
-  SpeedMove: 5
-  DownBorder: -12.96
-  HeightObject: 12.96
+  _neighboringStars: {fileID: 708933736}
+  _speedMove: 4
+  _downBorder: -12.96
+  _heightObject: 12.96
 --- !u!50 &1830486585
 Rigidbody2D:
   serializedVersion: 4
@@ -4134,7 +4115,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1840049926
@@ -4174,6 +4155,10 @@ GameObject:
   - component: {fileID: 1851917073}
   - component: {fileID: 1851917074}
   - component: {fileID: 1851917075}
+  - component: {fileID: 1851917080}
+  - component: {fileID: 1851917078}
+  - component: {fileID: 1851917077}
+  - component: {fileID: 1851917081}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Player
@@ -4259,7 +4244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecac8f8a752238141b77fcf99985a2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LinkOnSharedListLibrary: {fileID: 1851917066}
 --- !u!114 &1851917066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4272,33 +4256,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787411222e4022647973962cadd42147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FirstTypeOfAsteroid: {fileID: 21300000, guid: 58a0c7e2ccf39b245a3e066e868905fa, type: 3}
-  SecondTypeOfAsteroid: {fileID: 21300000, guid: f6e3763fcb7191a4b994f1df2b9e3f25, type: 3}
-  ThirdTypeOfAsteroid: {fileID: 21300000, guid: 92e2f440f9f4d8b409709856de725d25, type: 3}
-  FourthTypeOfAsteroid: {fileID: 21300000, guid: 1cb8395be69252b47b975e0a21ad263b, type: 3}
-  FifthTypeOfAsteroid: {fileID: 21300000, guid: d66bc8117cab0f041af84eecb0ae41a6, type: 3}
-  SixthTypeOfAsteroid: {fileID: 21300000, guid: 6a39073a6e40e374bb0438ff13d642c7, type: 3}
-  SeventhTypeOfAsteroid: {fileID: 21300000, guid: 07016061c3019ec4f92916860dbf3b8b, type: 3}
-  EighthTypeOfAsteroid: {fileID: 21300000, guid: 5923caf9789363a4a8ea30201cdfacb4, type: 3}
-  FirstLocationOfStars: {fileID: 21300000, guid: 93fd5baad03b6e54297bea79b7495e4f, type: 3}
-  SecondLocationOfStars: {fileID: 21300000, guid: 382110b01e742394b830c20a62a2d42a, type: 3}
-  ThirdLocationOfStars: {fileID: 21300000, guid: 0d50a4dfc7c053d459d3f3ff04a01530, type: 3}
-  FourthLocationOfStars: {fileID: 21300000, guid: 587b62f14f07260448463a253d1de168, type: 3}
-  FifthLocationOfStars: {fileID: 21300000, guid: ef1c022d1f843714894d17194a0cf490, type: 3}
-  SixthLocationOfStars: {fileID: 21300000, guid: 258a99219902bb249826fd524c23a201, type: 3}
-  SeventhLocationOfStars: {fileID: 21300000, guid: 7c2d8ce549a0d4c44b8b7b594ae7ea6a, type: 3}
-  EighthLocationOfStars: {fileID: 21300000, guid: 9f9672dee0ae5084488d65fc86d309ad, type: 3}
-  FirstStageOfDestruction: {fileID: 21300000, guid: 133a7c4f8d5402647ae93a8367f65166, type: 3}
-  SecondStageOfDestruction: {fileID: 21300000, guid: 78096df07f2cdd34a98b58b3c3b6e0c6, type: 3}
-  ThirdStageOfDestruction: {fileID: 21300000, guid: a104c19708541cf419b0bb8269dd44f2, type: 3}
-  FourthStageOfDestruction: {fileID: 21300000, guid: 903bb34ced58a3748861f5407cdd7398, type: 3}
-  FifthStageOfDestruction: {fileID: 21300000, guid: 041dbd2877821b64fb766a5e5e8e998b, type: 3}
-  ListSpritesTypeOfAsteroid: []
-  ListBackground: []
-  ListOfStarLocations: []
-  Asteroid: {fileID: 2302434183874875358, guid: 16b00eb6859e92340a5c9e37412b7e4d, type: 3}
-  BackgroundAsteroid: {fileID: 2302434183874875358, guid: 3b430cc3fb346be4f8dc1225903a49a4, type: 3}
-  ObjectDestruction: {fileID: 2302434183874875358, guid: d01b4560bf3e6e04daf63df438cc0afd, type: 3}
+  _firstStageOfDestruction: {fileID: 21300000, guid: 133a7c4f8d5402647ae93a8367f65166, type: 3}
+  _secondStateOfDestruction: {fileID: 21300000, guid: 78096df07f2cdd34a98b58b3c3b6e0c6, type: 3}
+  _thirdStateOfDestruction: {fileID: 21300000, guid: a104c19708541cf419b0bb8269dd44f2, type: 3}
+  _fourthStateOfDestruction: {fileID: 21300000, guid: 903bb34ced58a3748861f5407cdd7398, type: 3}
+  _fifthStateOfDestruction: {fileID: 21300000, guid: 041dbd2877821b64fb766a5e5e8e998b, type: 3}
+  _objectofDestruction: {fileID: 2302434183874875358, guid: d01b4560bf3e6e04daf63df438cc0afd, type: 3}
 --- !u!114 &1851917067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4311,8 +4274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57256477bafbc74a9f6e8a74044c848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LinkOnSharedListLibrary: {fileID: 1851917066}
-  Rectangle: {fileID: 2302434183874875358, guid: 0be4c277dd4c4b3498146bf365d76d15, type: 3}
+  _rectanglePrefab: {fileID: 2302434183874875358, guid: 0be4c277dd4c4b3498146bf365d76d15, type: 3}
 --- !u!114 &1851917068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4325,7 +4287,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b09941172911f42987902445bc6778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ListAsteroid: []
 --- !u!114 &1851917069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4350,12 +4311,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9820df23118eac54ea798ec6899af4a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas: {fileID: 949653861}
-  ButtonManagement: {fileID: 2012827462}
-  PlayerScriptRunner: {fileID: 0}
-  PlayerScriptCosmos: {fileID: 1688513611}
-  Settings: {fileID: 1200884364}
-  BackGroundSound: {fileID: 1851917073}
+  _canvas: {fileID: 949653861}
+  _buttonManagement: {fileID: 2012827462}
+  _settings: {fileID: 1200884364}
+  _playerScriptRunner: {fileID: 0}
+  _playerScriptCosmos: {fileID: 1688513611}
+  _backgroundSound: {fileID: 1851917073}
 --- !u!114 &1851917071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4368,7 +4329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9068b1a31726a264fad582e4b9c924db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SettingsMenu: {fileID: 1200884364}
+  _settingsMenu: {fileID: 1200884364}
 --- !u!114 &1851917072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4381,9 +4342,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a6b34cae5f4c574e87b98a72e54bc64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScoreCounterText: {fileID: 1027302391}
-  BestResultText: {fileID: 1202881209}
-  PlayerCosmos: {fileID: 1688513611}
+  _scoreCounterText: {fileID: 1027302391}
+  _bestResultText: {fileID: 1202881209}
+  _player: {fileID: 1688513611}
+  _unitSpeedAddingPoints: 0.05
 --- !u!82 &1851917073
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4492,8 +4454,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba89823c0ca425b44928f5c11fa0a0f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Slider: {fileID: 2126101691}
-  Mixer: {fileID: 24100000, guid: ed64e44c0c8ac2240a5aa476ba8b1ec6, type: 2}
+  _slider: {fileID: 2126101691}
+  _mixer: {fileID: 24100000, guid: ed64e44c0c8ac2240a5aa476ba8b1ec6, type: 2}
 --- !u!114 &1851917075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4506,6 +4468,73 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78a32fbb93c4ed54794aebfa3d2ad634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1851917077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851917059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fefb29979629e1d4fb963f92d023516d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _backgroundAsteroid: {fileID: 2302434183874875358, guid: 3b430cc3fb346be4f8dc1225903a49a4, type: 3}
+  _asteroid: {fileID: 2302434183874875358, guid: 16b00eb6859e92340a5c9e37412b7e4d, type: 3}
+--- !u!114 &1851917078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851917059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19f9547b9d24bc4ebce8f0bfc0e0037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _firstLocationOfStars: {fileID: 21300000, guid: 93fd5baad03b6e54297bea79b7495e4f, type: 3}
+  _secondLocationOfStars: {fileID: 21300000, guid: 382110b01e742394b830c20a62a2d42a, type: 3}
+  _thirdLocationOfStars: {fileID: 21300000, guid: 0d50a4dfc7c053d459d3f3ff04a01530, type: 3}
+  _fourthLocationOfStars: {fileID: 21300000, guid: 587b62f14f07260448463a253d1de168, type: 3}
+  _fifthLocationOfStars: {fileID: 21300000, guid: ef1c022d1f843714894d17194a0cf490, type: 3}
+  _sixthLocationOfStars: {fileID: 21300000, guid: 258a99219902bb249826fd524c23a201, type: 3}
+  _seventhLocationOfStars: {fileID: 21300000, guid: 7c2d8ce549a0d4c44b8b7b594ae7ea6a, type: 3}
+  _eightLocationOfStars: {fileID: 21300000, guid: 9f9672dee0ae5084488d65fc86d309ad, type: 3}
+--- !u!114 &1851917080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851917059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e39b2c85c98c14c9f26e5a52d555dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _firstTypeOfAsteroid: {fileID: 21300000, guid: 58a0c7e2ccf39b245a3e066e868905fa, type: 3}
+  _secondTypeOfAsteroid: {fileID: 21300000, guid: f6e3763fcb7191a4b994f1df2b9e3f25, type: 3}
+  _thirdTypeOfAsteroid: {fileID: 21300000, guid: 92e2f440f9f4d8b409709856de725d25, type: 3}
+  _fourthTypeOfAsteroid: {fileID: 21300000, guid: 1cb8395be69252b47b975e0a21ad263b, type: 3}
+  _fifthTypeOfAsteroid: {fileID: 21300000, guid: d66bc8117cab0f041af84eecb0ae41a6, type: 3}
+  _sixthTypeOfAsteroid: {fileID: 21300000, guid: 6a39073a6e40e374bb0438ff13d642c7, type: 3}
+  _seventhTypeOfAsteroid: {fileID: 21300000, guid: 07016061c3019ec4f92916860dbf3b8b, type: 3}
+  _eightTypeOfAsteroid: {fileID: 21300000, guid: 5923caf9789363a4a8ea30201cdfacb4, type: 3}
+--- !u!114 &1851917081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851917059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e3c83f9f96d634588130e17d1be219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 1851917061}
 --- !u!1 &1874543910
 GameObject:
   m_ObjectHideFlags: 0
@@ -4558,7 +4587,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4637a9e768cb6db449fba59affe78d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsButtonPressed: 0
 --- !u!114 &1874543913
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class SegmentsSnake : MonoBehaviour
 {
-    [SerializeField] private Transform SegmentPrefab;
-    public List<Transform> Segments;
-    private int InitialSize = 4;
+    public List<Transform> SegmentList { get; private set; } = new List<Transform>();
+    [SerializeField] private Transform _segmentPrefab;
+    private int _initialSize = 4;
 
     private void Start() => ResetState();
     
@@ -16,28 +16,28 @@ public class SegmentsSnake : MonoBehaviour
     }
     private void Move()
     {
-        for (var i = Segments.Count - 1; i > 0; i--)
+        for (var i = SegmentList.Count - 1; i > 0; i--)
         {
-            Segments[i].position = Segments[i - 1].position;
-            Segments[i].rotation = Segments[i - 1].rotation;
+            SegmentList[i].position = SegmentList[i - 1].position;
+            SegmentList[i].rotation = SegmentList[i - 1].rotation;
         }
     }
     private void ResetState()
     {
-        for (var i = 1; i < Segments.Count; i++)
-            Destroy(Segments[i].gameObject);
+        for (var i = 1; i < SegmentList.Count - 1; i++)
+            Destroy(SegmentList[i].gameObject);
         
-        Segments.Clear();
-        Segments.Add(gameObject.transform);
+        SegmentList.Clear();
+        SegmentList.Add(gameObject.transform);
 
-        for (var i = 0; i < InitialSize; i++)
-            Grow();
+            for (var i = 0; i < _initialSize; i++)
+                Grow();
     }
 
     public void Grow()
     {
-        var segment = Instantiate(SegmentPrefab);
-        segment.position = Segments[Segments.Count - 1].position;
-        Segments.Add(segment);
+        var segment = Instantiate(_segmentPrefab);
+        segment.position = SegmentList[SegmentList.Count - 1].position;
+        SegmentList.Add(segment);
     }
 }

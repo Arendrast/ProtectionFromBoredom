@@ -1,47 +1,57 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerCosmos : MonoBehaviour
 {
-    [SerializeField] private GameObject Particle;
-    [SerializeField] private AudioSource BackgroundSound;
-    [SerializeField] private Sprite OneDamage, TwoDamage;
-    [SerializeField] private GameObject LoseMenu;
-    private SpriteRenderer SpriteRendererComponent;
-    private int CounterStatus = 3;
-    private Vector2 ZeroPointsOfCamera, HeightAndWidthOfCamera;
-    public bool IsLose;
+    public bool IsLose { get; private set; }
+
+    [SerializeField] private GameObject _particleSystemWithPiecesOfPlayer;
+    [SerializeField] private GameObject _loseMenu;
+
+    [SerializeField] private AudioSource _backgroundSound;
+
+    [SerializeField] private Sprite _stateSpriteWithSingleDamageHits, _stateSpriteWithTwoDamageHits;
+
+    private SpriteRenderer _spriteRenderer;
+
+    private CameraFeatures _cameraFeatures;
+
+    private int _counterStateStatus = 3;
 
     private void Awake()
     {
         Time.timeScale = 1;
-        SpriteRendererComponent = GetComponent<SpriteRenderer>();
-        GettingCameraDimensions();
-        SpawnPlayer();
-        BackgroundSound.mute = false;
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        _backgroundSound.mute = false;
     }
+
+    private void Start() 
+    { 
+        _cameraFeatures = FindObjectOfType<CameraFeatures>();
+        SpawnPlayer();
+    }
+
+
     private void SpawnPlayer()
     {
-        var ScalePlayer = transform.localScale; // Спавн в середине (снизу) экрана
-        transform.position = new Vector2(HeightAndWidthOfCamera.x/2, ZeroPointsOfCamera.y + ScalePlayer.y*2.3f);
+        var offSetY = 2.2f;
+        var middlePointOfDownBorderOfCamera = _cameraFeatures.LowerLeftPointOfCamera.x + _cameraFeatures.CameraLength / 2;
+        transform.position = new Vector2(middlePointOfDownBorderOfCamera, _cameraFeatures.LowerLeftPointOfCamera.y + offSetY);
     }
-    private void GettingCameraDimensions()
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        var CameraCash = FindObjectOfType<Camera>();
-        ZeroPointsOfCamera = CameraCash.ScreenToWorldPoint(new Vector2(0f, 0f));
-        HeightAndWidthOfCamera = CameraCash.ScreenToWorldPoint(new Vector2(CameraCash.pixelWidth, CameraCash.pixelHeight));
-    }
-    private void OnTriggerEnter2D(Collider2D Col)
-    {
-        if (Col.gameObject.CompareTag("Enemy"))
+        if (col.gameObject.CompareTag("Enemy"))
         {
-            CounterStatus--;
-            if (CounterStatus != 0)
-                Instantiate(Particle, transform.position, Quaternion.identity);
+            _counterStateStatus--;
+            if (_counterStateStatus != 0)
+                Instantiate(_particleSystemWithPiecesOfPlayer, transform.position, Quaternion.identity);
         }
 
-        if (Col.TryGetComponent<MoveAsteroid>(out var MoveAsteroidScript))
-            StartCoroutine(UpdateStatus());
+        if (col.TryGetComponent<Asteroid>(out var asteroidScript))
+            StartCoroutine(UpdateStateStatus());
     }
 
     private void Lose()
@@ -49,22 +59,22 @@ public class PlayerCosmos : MonoBehaviour
         if (IsLose)
         {
             Time.timeScale = 0;
-            LoseMenu.SetActive(true);
-            BackgroundSound.mute = true;
+            _loseMenu.SetActive(true);
+            _backgroundSound.mute = true;
         }
     }
 
-    private IEnumerator UpdateStatus()
+    private IEnumerator UpdateStateStatus()
     {
-        switch (CounterStatus)
+        switch (_counterStateStatus)
         {
             case 2:
                 yield return new WaitForSeconds(0.1f);
-                SpriteRendererComponent.sprite = OneDamage;
+                _spriteRenderer.sprite = _stateSpriteWithSingleDamageHits;
                 break;
             case 1:
                 yield return new WaitForSeconds(0.1f);
-                SpriteRendererComponent.sprite = TwoDamage;
+                _spriteRenderer.sprite = _stateSpriteWithTwoDamageHits;
                 break;
             case 0:
                 IsLose = true;

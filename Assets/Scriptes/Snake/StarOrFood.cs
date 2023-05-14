@@ -2,27 +2,27 @@ using UnityEngine;
 
 public class StarOrFood : MonoBehaviour
 {
-    private const float LeftBorderScreen = -16f;
-    private const float RightBorderScreen = 16f;
-    private const float DownBorderScreen = -9f;
-    private const float UpBorderScreen = 9f;
-    private bool ProtectfromTwoSpawn;
+    private const float _leftBorderScreen = -16f;
+    private const float _rightBorderScreen = 16f;
+    private const float _downBorderScreen = -9f;
+    private const float _upBorderScreen = 9f;
+    private bool _protectFromTwoSpawn;
 
-    private void OnTriggerEnter2D(Collider2D Сol)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (Сol.gameObject.TryGetComponent<SnakeManagement>(out var Snake))
+        if (col.gameObject.TryGetComponent<SnakeManagement>(out var Snake))
         {
-            if (!ProtectfromTwoSpawn)
+            if (!_protectFromTwoSpawn)
                     TeleportationStar();
         }
-        if (Сol.gameObject.CompareTag("Button"))
+        if (col.gameObject.CompareTag("Button"))
             TeleportationStar();
     }
     private void TeleportationStar()
     {
-        gameObject.transform.position = new Vector2(Random.Range(LeftBorderScreen, RightBorderScreen), Random.Range(DownBorderScreen, UpBorderScreen));
-        ProtectfromTwoSpawn = true;
+        gameObject.transform.position = new Vector2(Random.Range(_leftBorderScreen, _rightBorderScreen), Random.Range(_downBorderScreen, _upBorderScreen));
+        _protectFromTwoSpawn = true;
         Invoke(nameof(OffProtect), 1);
     }
-    private void OffProtect() => ProtectfromTwoSpawn = false;
+    private void OffProtect() => _protectFromTwoSpawn = false;
 }
